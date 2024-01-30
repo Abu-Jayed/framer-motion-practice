@@ -1,18 +1,24 @@
-import { Link } from "react-router-dom";
-import { Button } from "../ui/button";
+import { NavLink } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Button } from '../ui/button';
 
 const Navbar = () => {
   return (
-    <header className="h-16">
-      <nav className="w-full h-full max-w-screen-xl px-5 mx-auto  flex items-center justify-between">
-        <h1 className="text-3xl">iRepair</h1>
-        <ul className="space-x-5">
-          <Link to={"/"}>Home</Link>
-          <Link to={"/about"}>About</Link>
+    <motion.header
+      className="h-16 fixed w-full bg-white z-[999]"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 1, duration: 1 }}
+    >
+      <nav className="w-full h-full max-w-[1230px] px-[20px] mx-auto flex justify-between items-center ">
+        <span className="text-3xl">iRepair</span>
+        <ul className=" space-x-5">
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/about">About</NavLink>
           <Button>Login</Button>
         </ul>
       </nav>
-    </header>
+    </motion.header>
   );
 };
 
