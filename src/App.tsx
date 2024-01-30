@@ -1,18 +1,15 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { Button } from './components/ui/button'
+import { useState } from "react";
+import "./App.css";
+import MainLayout from "./components/layouts/MainLayout";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
-    <div>Hello</div>
-    <Button>Hi</Button>
+      <MainLayout></MainLayout>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
