@@ -1,10 +1,10 @@
-import React from 'react';
+import Container from "@/components/Container";
 
 const Home = () => {
   return (
-    <div>
-      Home is here
-    </div>
+    <Container>
+      <h1 className="">Home is here</h1>
+    </Container>
   );
 };
 
