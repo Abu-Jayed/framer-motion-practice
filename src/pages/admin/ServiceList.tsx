@@ -1,34 +1,23 @@
-import { getServices } from "@/api/admin/service/service.api";
+import { useGetServices } from "@/api/admin/service/serviceHook";
 import Container from "@/components/Container";
 import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useQuery } from "@tanstack/react-query";
 import { Trash2 } from "lucide-react";
 
 const ServiceList = () => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["services"],
-    queryFn: getServices,
-  });
+  const { data: services, isLoading, isError } = useGetServices();
 
   if (isLoading) {
     return <h1 className="text-rose-800 text-center mt-6">Loading...</h1>;
   }
-  const services = data?.data.data.map((item) => ({
-    id: item._id,
-    name: item.name,
-    description: item.description,
-    price: item.price,
-  }));
 
   if (isError) {
     return (
@@ -59,7 +48,9 @@ const ServiceList = () => {
               <TableCell>{service.description}</TableCell>
               <TableCell>{service.price}</TableCell>
               <TableCell className="text-right">
-                <Button className="p-2" variant={"destructive"}><Trash2 /></Button>
+                <Button className="p-2" variant={"destructive"}>
+                  <Trash2 />
+                </Button>
               </TableCell>
             </TableRow>
           ))}
