@@ -10,9 +10,45 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Trash2 } from "lucide-react";
+import { useState } from "react";
 
 const ServiceList = () => {
+
+  const [serviceName, setServiceName] = useState("");
+
+  const queryClient = useQueryClient()
+
+  const {mutateAsync,isError:postErr,isSuccess} = useMutation({
+    mutationFn: async (data) => {
+      return await fetch("http://localhost:5000/api/v1/services", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+    },
+    onSuccess: ()=> {
+      queryClient.invalidateQueries({queryKey: ["services"]})
+    }
+  });
+
+  console.log(postErr,isSuccess);
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    console.log(serviceName);
+    const serviceData = {
+      name: serviceName,
+      description: "Replace any Description here",
+      devices: ["Macbook Pro", "Macbook air", "iPad pro"],
+      price: 306.48,
+    };
+    await mutateAsync(serviceData)
+  };
+
   const { data: services, isLoading, isError } = useGetServices();
 
   if (isLoading) {
@@ -62,6 +98,16 @@ const ServiceList = () => {
           </TableRow>
         </TableFooter>
       </Table>
+      <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          className="border-2 p-3 rounded-lg "
+          onChange={(e) => setServiceName(e.target.value)}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </div>
     </Container>
   );
 };

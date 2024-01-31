@@ -14,6 +14,8 @@ export const useGetServices = () => {
       }));
       return services;
     },
+    gcTime: 10000, 
+    staleTime: 100000
   });
   console.log(servicesData);
   return servicesData;
